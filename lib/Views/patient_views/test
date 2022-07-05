@@ -1,0 +1,128 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:hospitalmanagementsystem/Constants/routes.dart';
+import 'package:hospitalmanagementsystem/Services/auth/auth_service.dart';
+import 'package:hospitalmanagementsystem/Services/curd/database_user.dart';
+import 'package:hospitalmanagementsystem/Services/curd/patient_service.dart';
+
+class EditPatient extends StatefulWidget {
+  const EditPatient({Key? key}) : super(key: key);
+
+  @override
+  State<EditPatient> createState() => _EditPatientState();
+}
+
+class _EditPatientState extends State<EditPatient> {
+  late final _height = MediaQuery.of(context).size.height;
+  late final PatientService _patient_service;
+  String get userEmail => AuthService.firebase().currentUser!.email!;
+  late final TextEditingController emailController,
+      nameController,
+      addressController,
+      bloodTypeController,
+      ageController,
+      medicalHistoryController,
+      phoneNumberController,
+      dateOfBirthController,
+      heightController,
+      weightController,
+      genderController;
+
+  void initState() {
+    emailController = TextEditingController();
+    nameController = TextEditingController();
+    addressController = TextEditingController();
+    bloodTypeController = TextEditingController();
+    ageController = TextEditingController();
+    medicalHistoryController = TextEditingController();
+    phoneNumberController = TextEditingController();
+    dateOfBirthController = TextEditingController();
+    heightController = TextEditingController();
+    weightController = TextEditingController();
+    genderController = TextEditingController();
+    _patient_service = PatientService();
+    super.initState();
+  }
+
+  Future<DataBaseUser> GetPatient() async {
+    DataBaseUser patient = await _patient_service.getUser(email: userEmail);
+    emailController.text = patient.email;
+    nameController.text = patient.name;
+    addressController.text = patient.address;
+    bloodTypeController.text = patient.bloodType!;
+    ageController.text = patient.age.toString();
+    medicalHistoryController.text = patient.healthHistory!;
+    phoneNumberController.text = patient.phoneNumber.toString();
+    dateOfBirthController.text = patient.dateOfBirth;
+    heightController.text = patient.height as String;
+    weightController.text = patient.weight as String;
+    genderController.text = patient.gender;
+    return patient;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.pink[700],
+        title: const Text("edit patient"),
+        leading: Row(children: [
+          BackButton(
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  patientRecordRoute, (route) => false);
+            },
+          )
+        ]),
+      ),
+      body: FutureBuilder(
+          future: GetPatient(),
+          builder: (context, AsyncSnapshot<DataBaseUser> snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(controller: emailController),
+                    TextField(controller: nameController),
+                    TextField(controller: addressController),
+                    TextField(controller: bloodTypeController),
+                    TextField(controller: ageController),
+                    TextField(controller: medicalHistoryController),
+                    TextField(controller: phoneNumberController),
+                    TextField(controller: dateOfBirthController),
+                    TextField(controller: heightController),
+                    TextField(controller: weightController),
+                    TextField(controller: genderController),
+
+                    // Text("id: ${snapshot.data?.id}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("name: ${snapshot.data?.name}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("address: ${snapshot.data?.address}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("phone number: ${snapshot.data?.phoneNumber}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("age: ${snapshot.data?.age}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("blood type: ${snapshot.data?.bloodType}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("date of birth: ${snapshot.data?.dateOfBirth}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("gender: ${snapshot.data?.gender}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("health history: ${snapshot.data?.healthHistory}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("height: ${snapshot.data?.height}"),
+                    // SizedBox(height: 0.05 * _height),
+                    // Text("weight: ${snapshot.data?.weight}"),
+                    TextButton(onPressed: () {}, child: Text("Edit")),
+                  ]);
+            } else {
+              return const Text("no patient is recorded");
+            }
+          }),
+    );
+  }
+}

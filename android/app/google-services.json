@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24943268871",
+    "project_id": "my-hospital-is-perfect",
+    "storage_bucket": "my-hospital-is-perfect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24943268871:android:fd8d6a2a5e1417a28e06a2",
+        "android_client_info": {
+          "package_name": "hello.com.hospitalmanagementsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24943268871-ubmncui5im650l1j4h1rtnb5748mlctp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiO94nhuFECNZzMHqo2LXyNU-DSidvAIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24943268871-ubmncui5im650l1j4h1rtnb5748mlctp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
