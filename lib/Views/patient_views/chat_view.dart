@@ -18,7 +18,7 @@ class _ChatViewState extends State<ChatView> {
         title: const Text("View"),
       ),
       body: Center(
-        child: FlatButton(
+        child: FloatingActionButton(
             onPressed: () => launch("tel://01068338658"),
             child: const Text("Call me")),
       ),
